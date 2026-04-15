@@ -6,7 +6,7 @@ SQL注入实例
 
 ## 实验目的
 
-SQL注入实例复现
+SQL注入实例学习
 
 ## 核心步骤
 
@@ -273,7 +273,7 @@ select id from users where name='jaden';create database xxx;  #服务端执行
 
 
 
-### 盲注原理解释
+### 报错注入原理解释
 
 #### 工程师视角
 
@@ -285,15 +285,13 @@ select id from users where name='jaden';create database xxx;  #服务端执行
 
 
 
-## 关键问题
+## 阶段复盘
 
-需要猜后端代码中的数据处理逻辑
+以上学习部分为检测阶段
 
+1.查询动作用`or 1=1`、`and 1=1`、`and 1=2`检测
 
-
-## 实验结果
-
-成功复现SQL注入实例
+2.写入动作用报错注入`updatexml(1,(concat(0x7e,(select database()),0x7e)),1)`检测
 
 
 
