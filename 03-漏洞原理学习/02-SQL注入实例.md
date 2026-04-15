@@ -94,7 +94,7 @@ json={"username":"admin"} --> json={"username":"admin' or 1=1#"}
 
 ![json注入响应](images/json注入响应.png)
 
-### 盲注
+### 报错注入
 
 SQL语句执行带有错误参数的数据库常用函数时会报错，如果服务端没有对报错信息进行过滤，直接相应给客户端，就会造成敏感信息泄露。
 
@@ -192,7 +192,7 @@ k' and updatexml(1,(concat(0x7e,(select password from users limit 0,1),0x7e)),1)
 
 
 
-#### insert/update/drop
+#### insert/update/delete
 
 注册、更新、删除信息时，服务端需要对数据库写入信息。服务端未对提交信息进行有效筛选，直接拼接SQL语句执行，形成SQL注入点
 
@@ -248,14 +248,28 @@ k' and updatexml(1,(concat(0x7e,(select password from users limit 0,1),0x7e)),1)
 
 ### 堆叠注入
 
-发现服务端数据库支持单次执行多条SQL语句后在SQL注入点单次执行多条SQL语句。
+用`;`分割的多条SQL语句同时执行。
 
 ```shell
 jaden';create database xxx  #提交数据
 select id from users where name='jaden';create database xxx;  #服务端执行
 ```
 
+**PHP+Mysql 部分函数支持堆叠注入**
 
+`mysqli_query`不支持堆叠注入
+
+`mysqli_multi_query`支持堆叠注入
+
+**SQL Server 全部函数支持堆叠注入**
+
+**Oracle不支持堆叠注入**
+
+
+
+### 二次注入
+
+服务端的转义机制对数据加了`\`转义，但在写入数据库时进行原文写入。攻击者通过某种手段使服务端代码调用写入的脏数据拼接SQL语句执行。
 
 
 
