@@ -289,9 +289,8 @@ select id from users where name='jaden';create database xxx;  #服务端执行
 
 ## 盲注
 
-指定两个筛选条件，如果两个条件都为真，页面正常相应；否则页面无数据 / 异常。
-
-
+**盲注就是靠 “页面是否变化” 反推：
+我的输入有没有被当成 SQL 语句执行。**
 
 正常`or 1=1`查询注入和`updatexml(1,(concat(0x7e,(select database()),0x7e)),1)`写入注入可能会被服务端拦截响应信息。
 
