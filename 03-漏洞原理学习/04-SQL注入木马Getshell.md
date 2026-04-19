@@ -52,7 +52,7 @@
 
 
 
-## 上传phpinfo.php
+## 注入phpinfo.php
 
 **服务端本身没有phpinfo.php**
 
