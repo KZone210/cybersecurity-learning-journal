@@ -2,6 +2,16 @@
 
 
 
+## 分辨Sqlserver数据库
+
+Sql Server数据库默认带sysobjects表，查询不报错→表存在→是Sql Server数据库
+
+```shell
+and exists(select * from sysobjects)
+```
+
+
+
 ## 爆版本号
 
 ```shell
